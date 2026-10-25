@@ -95,7 +95,8 @@ export default function ProjectGallery({ projets }) {
                   Détails du projet
                   <span className="visually-hidden"> {projet.nom}</span>
                 </a>
-                {projet.site && (
+                {/* Pas de « Voir le site » sur la carte de ce site : on y est déjà ! */}
+                {projet.site && !projet.estCeSite && (
                   <a
                     className={styles.secondary}
                     href={projet.site}

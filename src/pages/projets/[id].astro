@@ -29,8 +29,18 @@ interface Props {
 
 const { projet, precedent, suivant } = Astro.props;
 const { Content } = await render(projet);
-const { nom, titre, accroche, filtres, depot, site, kanban, image, imageAlt } =
-  projet.data;
+const {
+  nom,
+  titre,
+  accroche,
+  filtres,
+  depot,
+  site,
+  estCeSite,
+  kanban,
+  image,
+  imageAlt,
+} = projet.data;
 ---
 
 <BaseLayout
@@ -84,10 +94,15 @@ const { nom, titre, accroche, filtres, depot, site, kanban, image, imageAlt } =
           {
             site && (
               <li>
-                <a href={site} target="_blank" rel="noopener">
-                  Voir le site
-                  <span class="visually-hidden"> {nom} (nouvel onglet)</span>
-                </a>
+                {estCeSite ? (
+                  // Ce site lui-même : même onglet, pas de mention « nouvel onglet »
+                  <a href={site}>Voir le site</a>
+                ) : (
+                  <a href={site} target="_blank" rel="noopener">
+                    Voir le site
+                    <span class="visually-hidden"> {nom} (nouvel onglet)</span>
+                  </a>
+                )}
               </li>
             )
           }

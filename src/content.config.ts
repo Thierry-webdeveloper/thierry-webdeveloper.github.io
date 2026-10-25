@@ -21,6 +21,7 @@ const projets = defineCollection({
       filtres: z.array(filtres).min(1),
       depot: z.string().url().optional(), // dépôt GitHub
       site: z.string().url().optional(), // site en ligne
+      estCeSite: z.boolean().default(false), // la fiche décrit ce site : lien « Voir le site » interne
       kanban: z.string().url().optional(), // tableau de suivi public (Notion)
       image: image(), // capture principale (16/10)
       imageAlt: z.string(), // texte alternatif de la capture en en-tête de fiche
