@@ -2,17 +2,10 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { themes } from "./data/themes";
 
-// Filtres autorisés : une faute de frappe dans une fiche provoque une erreur
-const filtres = z.enum([
-  "React",
-  "Sass",
-  "SEO",
-  "Performance",
-  "Accessibilité",
-  "Tests",
-  "Agile",
-]);
+// Filtres autorisés, déduits de src/data/themes.ts : une faute de frappe provoque une erreur
+const filtres = z.enum(themes);
 
 const projets = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/projets" }),

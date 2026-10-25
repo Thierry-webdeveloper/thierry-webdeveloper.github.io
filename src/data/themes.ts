@@ -1,5 +1,5 @@
 // Icônes partagées : section Compétences, galerie des projets et pages projets.
-import { siReact, siSass } from "simple-icons";
+import { siAstro, siReact, siSass } from "simple-icons";
 
 // Icônes au trait (modèle Feather Icons) pour les compétences sans logo de marque
 export const traits = {
@@ -15,15 +15,21 @@ export const traits = {
     '<rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="3" height="9"/><rect x="14" y="7" width="3" height="5"/>',
 };
 
-// Une icône par thème de filtre : logo de marque (tracé plein) ou icône au trait
+// Une icône par thème de filtre : logo de marque (tracé plein) ou icône au trait.
+// Source unique : ajouter un filtre = ajouter une ligne ici (le schéma en dépend).
 export type IconeTheme = { marque?: string; trait?: string };
 
-export const iconesThemes: Record<string, IconeTheme> = {
+export const iconesThemes = {
   React: { marque: siReact.path },
+  Astro: { marque: siAstro.path },
   Sass: { marque: siSass.path },
   SEO: { trait: traits.seo },
   Performance: { trait: traits.performance },
   Accessibilité: { trait: traits.accessibilite },
   Tests: { trait: traits.tests },
   Agile: { trait: traits.kanban },
-};
+} satisfies Record<string, IconeTheme>;
+
+// Noms des thèmes, déduits des clés : utilisés par le schéma des fiches
+export type Theme = keyof typeof iconesThemes;
+export const themes = Object.keys(iconesThemes) as [Theme, ...Theme[]];
