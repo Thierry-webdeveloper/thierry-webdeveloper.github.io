@@ -36,6 +36,15 @@ const retours = [
       "Dépôt Git de qualité pro : commits atomiques (1 bug = 1 commit), messages qui expliquent le pourquoi et le périmètre de chaque correction, y compris quand elle déborde du bug initial",
     ],
   },
+  {
+    projet: 12,
+    nom: "Mon portfolio",
+    id: "portfolio",
+    extraits: [
+      "L'architecture est cohérente. […] Le code est bien découpé et très propre.",
+      "Thierry a su aller plus loin que les attentes du projet […] comme l'apprentissage du framework Astro, ou le référencement très poussé du site.",
+    ],
+  },
 ];
 ---
 
@@ -91,6 +100,7 @@ const retours = [
 
     @include from($bp-tablet) {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: 1fr; // toutes les lignes ont la hauteur de la plus haute
     }
 
     @include from($bp-wide) {
