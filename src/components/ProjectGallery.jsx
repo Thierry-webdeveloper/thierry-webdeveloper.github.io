@@ -1,9 +1,10 @@
 // Galerie des projets, avec un filtre par thème (îlot React chargé avec client:visible).
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./ProjectGallery.module.scss";
 import ThemeIcon from "./ThemeIcon.jsx";
 
 const TOUS = "Tous";
+const FILTER_STORAGE_KEY  = "filtre-projets"; // clé du filtre mémorisé pendant la visite
 
 export default function ProjectGallery({ projets }) {
   // Seul état du composant : le thème choisi
@@ -11,6 +12,26 @@ export default function ProjectGallery({ projets }) {
 
   // Les thèmes réellement utilisés, sans doublon, dans l'ordre d'apparition
   const themes = [...new Set(projets.flatMap((projet) => projet.filtres))];
+
+  // Après l'affichage : reprend le filtre choisi plus tôt dans cet onglet
+  useEffect(() => {
+    try {
+      const stored = sessionStorage.getItem(FILTER_STORAGE_KEY);
+      if (stored && themes.includes(stored)) setActif(stored);
+    } catch {
+      // sessionStorage indisponible : on reste sur « Tous »
+    }
+  }, []); // une seule fois, au chargement (les projets ne changent pas)
+
+  // Choix d'un filtre : mise à jour de l'état et mémorisation
+  const selectFilter = (theme) => {
+    setActif(theme);
+    try {
+      sessionStorage.setItem(FILTER_STORAGE_KEY, theme);
+    } catch {
+      // sessionStorage indisponible : le choix vaut pour cette page seulement
+    }
+  };
 
   // Le numéro est fixé sur la liste complète : il ne change pas quand on filtre
   const numerotes = projets.map((projet, index) => ({ ...projet, numero: index + 1 }));
@@ -34,7 +55,7 @@ export default function ProjectGallery({ projets }) {
             type="button"
             className={styles.filter}
             aria-pressed={actif === theme}
-            onClick={() => setActif(theme)}
+            onClick={() => selectFilter(theme)}
           >
             <ThemeIcon theme={theme} />
             {theme}
